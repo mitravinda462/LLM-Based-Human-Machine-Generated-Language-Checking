@@ -6,8 +6,8 @@ This repo contains the code and access to data used in the paper [Interpretable 
 
 The code and data (UniLC benchmark) can be downloaded by
 ```
-git clone https://https://github.com/luohongyin/UniLC.git
-cd UniLC/
+git clone https://github.com/Vishwa-Sheth/NLP-UniLC.git
+cd NLP-UniLC/
 bash download.sh
 ```
 

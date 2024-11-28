@@ -2,6 +2,7 @@ import sys
 import json
 import time
 import argparse
+import os
 
 import openai
 
@@ -19,7 +20,7 @@ except:
 import warnings
 warnings.filterwarnings("ignore")
 
-openai.api_key = open('openai-key.txt').read().strip()
+openai.api_key = ""
 
 parser = argparse.ArgumentParser(
     prog='python general_check.py',
@@ -109,47 +110,39 @@ def load_dataset(domain = None, split = 'dev'):
     return dataset
 
 
-def gen_response_chat(
-        prompt, t, max_tok, n, system_info = '',
-    ):
-
+def gen_response_chat(prompt, t, max_tok, n, system_info=''):
     complete = False
-    while not complete:
+    retries = 0
+    max_retries = 5
+    while not complete and retries < max_retries:
         try:
             response = openai.ChatCompletion.create(
-                model = 'gpt-3.5-turbo',
-                messages = [
-                    {
-                        'role': 'system',
-                        'content': system_info
-                    },
-                    {
-                        'role': 'user',
-                        'content': prompt
-                    }
+                model="gpt-3.5-turbo",  # Use 'gpt-3.5-turbo' if desired
+                messages=[
+                    {'role': 'system', 'content': system_info},
+                    {'role': 'user', 'content': prompt},
                 ],
-                temperature = t,
-                max_tokens = max_tok,
-                n = n
+                temperature=t,
+                max_tokens=max_tok,
+                n=n,
             )
-
             ans_list = [
-                cand['message']['content'].strip() for cand in response['choices'] # \
-                    # if condition_str in cand['message']['content']
+                cand['message']['content'].strip() for cand in response['choices']
             ]
             if n == 1:
                 ans_txt = ans_list[0]
             else:
                 ans_txt = ans_list
-                # ans_txt, confidence = select_func(ans_list, keywords = keywords)
             complete = True
-        except:
-            print('Chat error')
-            # print(prompt)
-            # abort()
-            time.sleep(2)
+        except Exception as e:
+            if "502 Bad Gateway" in str(e):
+                print(f'Chat error (502 Bad Gateway), retrying... ({retries + 1}/{max_retries})')
+            else:
+                print('Chat error:', str(e))
+            retries += 1
+            time.sleep(2 ** retries)  # Exponential backoff
+    # print("Ans returned is: ", ans_txt)
     return ans_txt
-
 
 def think_twice(claim, verify_prompt, searcher, search_mode):
     prompt = f'{verify_prompt}\n\nSomeone said: {claim}\nQuestion: Is it fair to say that?\nAnswer:'
@@ -190,8 +183,10 @@ def verify_dataset(searcher, dataset, verify_prompt, args):
 
     for i, case in enumerate(dataset):
         claim, label, _ = case
+        print(claim)
         
         if args.mode == 'zero':
+            # print("Zero prompt testing")
             prompt = f'Someone said: {claim}\nQuestion: Is it fair to say that?\nAnswer:'
             ans_prompt = None
             qa_str = None
@@ -272,9 +267,13 @@ def verify_dataset(searcher, dataset, verify_prompt, args):
         if i % 100 == 0:
             print(f'Processed {i + 1} claims.')
     
+    # Create the 'log' directory if it doesn't exist
+    os.makedirs('log', exist_ok=True)
+
     open(f'log/{args.task}_{args.mode}_check_{args.exp_name}.log', 'w').write(
         '\n'.join(log_list)
     )
+    
     json.dump(wrong_list, open(f'log/{args.task}_wrong_list_joint.json', 'w'))
     json.dump(verify_str_list, open(f'log/{args.task}_{args.mode}_verify_list_{args.exp_name}.json', 'w'))
     
@@ -289,7 +288,7 @@ if __name__ == '__main__':
     # args.exp_name: example = "joint"
 
     args = parser.parse_args()
-
+    # print('Args parser completed')
     if args.mode == 'search':
         searcher = FaissSearcher.from_prebuilt_index(
             'wikipedia-dpr-multi-bf',
@@ -297,10 +296,13 @@ if __name__ == '__main__':
         )
     else:
         searcher = None
-
+    # print('Is else completed')
     dataset = load_dataset(args.task)[args.start_idx:]
+    # print('Dataset loaded')
+    # print(dataset[0])
     verify_prompt = open('general_prompts/verify_prompts.txt').read()
-    
+    # print('Prompt verified')
+    # print(verify_prompt)
     acc = verify_dataset(
         searcher, dataset, verify_prompt, args
     )

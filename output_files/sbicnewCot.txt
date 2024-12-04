@@ -1,0 +1,8 @@
+Dataset size = 4691
+
+ if you make a fact filled book or book of lies about the clintons your gonna just end up another number on the  clinton body count. 
+Chat error: This is not a chat model and thus not supported in the v1/chat/completions endpoint. Did you mean to use v1/completions?
+Chat error: This is not a chat model and thus not supported in the v1/chat/completions endpoint. Did you mean to use v1/completions?
+Chat error: This is not a chat model and thus not supported in the v1/chat/completions endpoint. Did you mean to use v1/completions?
+Chat error: This is not a chat model and thus not supported in the v1/chat/completions endpoint. Did you mean to use v1/completions?
+Chat error: This is not a chat model and thus not supported in the v1/chat/completions endpoint. Did you mean to use v1/completions?

@@ -7,7 +7,7 @@ This repo contains the code and access to data used in the paper [Interpretable 
 The evaluation corpora data is saved at `UniLC/ulsc_data/`
 
 ## OpenAI API key
-Paste your OpenAI API key in the `openai-key.txt` file or replace the corresponding code in `general_check.py` (line 20).
+Paste your OpenAI API key in the `openai-key.txt` file or replace the corresponding code in `general_check.py` (line 23).
 
 ## Reproducing the experiments
 

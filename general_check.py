@@ -20,7 +20,7 @@ except:
 import warnings
 warnings.filterwarnings("ignore")
 
-openai.api_key = ""
+openai.api_key = "OPENAI_API_KEY"
 
 parser = argparse.ArgumentParser(
     prog='python general_check.py',
@@ -117,7 +117,7 @@ def gen_response_chat(prompt, t, max_tok, n, system_info=''):
     while not complete and retries < max_retries:
         try:
             response = openai.ChatCompletion.create(
-                model="gpt-3.5-turbo",  # Use 'gpt-3.5-turbo' if desired
+                model="gpt-3.5",  
                 messages=[
                     {'role': 'system', 'content': system_info},
                     {'role': 'user', 'content': prompt},
@@ -141,7 +141,8 @@ def gen_response_chat(prompt, t, max_tok, n, system_info=''):
                 print('Chat error:', str(e))
             retries += 1
             time.sleep(2 ** retries)  # Exponential backoff
-    # print("Ans returned is: ", ans_txt)
+    print("Ans returned is: ", ans_txt)
+    # exit(0)
     return ans_txt
 
 def think_twice(claim, verify_prompt, searcher, search_mode):

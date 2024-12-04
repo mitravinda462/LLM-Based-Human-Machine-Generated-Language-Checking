@@ -101,6 +101,10 @@ def load_dataset(domain = None, split = 'dev'):
     
     if domain == 'sbic':
         extract_case_func = extract_scifact_case
+
+    if domain == 'toxigen':
+        #print(domain)
+        extract_case_func = extract_scifact_case
     
     data_list = open(fn).readlines()
     dataset = [extract_case_func(x) for x in data_list]
@@ -117,7 +121,7 @@ def gen_response_chat(prompt, t, max_tok, n, system_info=''):
     while not complete and retries < max_retries:
         try:
             response = openai.ChatCompletion.create(
-                model="gpt-3.5",  
+                model="gpt-3.5-turbo",  # Use 'gpt-4.5-turbo' if desired
                 messages=[
                     {'role': 'system', 'content': system_info},
                     {'role': 'user', 'content': prompt},
@@ -142,7 +146,7 @@ def gen_response_chat(prompt, t, max_tok, n, system_info=''):
             retries += 1
             time.sleep(2 ** retries)  # Exponential backoff
     print("Ans returned is: ", ans_txt)
-    # exit(0)
+    exit(0)
     return ans_txt
 
 def think_twice(claim, verify_prompt, searcher, search_mode):

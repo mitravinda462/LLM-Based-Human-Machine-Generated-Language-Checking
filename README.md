@@ -18,7 +18,7 @@ Paste your OpenAI API key in the `openai-key.txt` file or replace the correspond
 
 ## Reproducing the experiments
 
-The experiments can be reproduced on four tasks:
+The experiments can be reproduced on five tasks:
 
 - Fact checking
     - [Climate](https://www.sustainablefinance.uzh.ch/en/research/climate-fever.html): `climate`
@@ -27,6 +27,8 @@ The experiments can be reproduced on four tasks:
     - [Hate speech detection](https://www.aclweb.org/anthology/W18-5102): `hsd`
 - Stereotypes
     - [Social bias frame](https://maartensap.com/social-bias-frames/): `sbic`
+- Fairness checking (Machine Generated)
+    - [Toxigen] (https://huggingface.co/datasets/toxigen/toxigen-data): `toxigen` (already preprocesed and present in this repo)
 
 with three different prompting modes:
 - Fully zero-shot (zero-cls): `zero`
@@ -41,7 +43,7 @@ Unified language safety checking with LLMs.
 
 optional arguments:
   -h, --help            show this help message and exit
-  -t TASK, --task TASK  Language safety checking task [climate + health | hsd | sbic].
+  -t TASK, --task TASK  Language safety checking task [climate | health | hsd | sbic | toxigen].
   -m MODE, --mode MODE  Prompting mode [zero | fp | cot].
   -s START_IDX, --start-idx START_IDX
                         Index of the first sample to process.
@@ -49,8 +51,8 @@ optional arguments:
                         Name tag for the experiment log file.
   -v, --verbose
 ```
+Example: python general_check.py -t sbic -m cot -s 0 -n 0
 
-If a full evaluation is supposed to be conducted, set `args.start_idx = 0, args.verbose = False`. To look into the model behavior on the `i`-th test sample, set `args.start_idx = i, args.verbose = True`
 
 ## Citation
 

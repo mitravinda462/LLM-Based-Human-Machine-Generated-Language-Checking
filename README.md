@@ -2,16 +2,9 @@
 
 This repo contains the code and access to data used in the paper [Interpretable Unified Language Checking](https://arxiv.org/pdf/2304.03728.pdf).
 
-## Code and data download
+## Data
 
-The code and data (UniLC benchmark) can be downloaded by
-```
-git clone https://github.com/Vishwa-Sheth/NLP-UniLC.git
-cd NLP-UniLC/
-bash download.sh
-```
-
-The evaluation corpora will be saved at `UniLC/ulsc_data/`
+The evaluation corpora data is saved at `UniLC/ulsc_data/`
 
 ## OpenAI API key
 Paste your OpenAI API key in the `openai-key.txt` file or replace the corresponding code in `general_check.py` (line 20).

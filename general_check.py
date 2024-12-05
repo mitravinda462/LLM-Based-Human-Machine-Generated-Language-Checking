@@ -146,7 +146,7 @@ def gen_response_chat(prompt, t, max_tok, n, system_info=''):
             retries += 1
             time.sleep(2 ** retries)  # Exponential backoff
     print("Ans returned is: ", ans_txt)
-    exit(0)
+    #exit(0)
     return ans_txt
 
 def think_twice(claim, verify_prompt, searcher, search_mode):

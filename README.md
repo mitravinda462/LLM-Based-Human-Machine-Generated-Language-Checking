@@ -2,7 +2,7 @@
 
 This repo contains the code and access to data used in the paper [Interpretable Unified Language Checking](https://arxiv.org/pdf/2304.03728.pdf).
 
-### Install required pacakages: Please make sure to run the below code after NLP-UniLC being the current directory
+### Install required packages: Please make sure to run the below code after NLP-UniLC being the current directory
 ```
 pip install -r requirements.txt
 ```

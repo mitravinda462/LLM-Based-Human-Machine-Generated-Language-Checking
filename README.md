@@ -52,6 +52,7 @@ optional arguments:
 ```
 Example: python general_check.py -t hsd -m cot -s 0 -n 0
 
+The folder output_files has examples of how output is being generated on the console by running the above command. Also note that once you run the command you can see your logs inside log folder
 
 ## Citation
 

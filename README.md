@@ -28,7 +28,7 @@ with three different prompting modes:
 - Few-shot fact generation + zero-shot ethical classification (few-fp + zero-cls): `fp`
 - Few-shot fact generation + few-shot ethical classification (few-fp + few-cls): `cot`
 
-# Install required pacakages:
+### Install required pacakages:
 pip install -r requirements.txt
 
 An experiment can be ran with

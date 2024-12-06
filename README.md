@@ -2,12 +2,17 @@
 
 This repo contains the code and access to data used in the paper [Interpretable Unified Language Checking](https://arxiv.org/pdf/2304.03728.pdf).
 
+### Install required pacakages: Please make sure to run the below code after NLP-UniLC being the current directory
+```
+pip install -r requirements.txt
+```
+
 ## Data
 
 The evaluation corpora data is saved at `UniLC/ulsc_data/`
 
 ## OpenAI API key
-Paste your OpenAI API key in the `openai-key.txt` file or replace the corresponding code in `general_check.py` (line 23).
+Paste your OpenAI API key instead of `OPENAI_API_KEY` in `general_check.py` (line 23).
 
 ## Reproducing the experiments
 
@@ -28,10 +33,6 @@ with three different prompting modes:
 - Few-shot fact generation + zero-shot ethical classification (few-fp + zero-cls): `fp`
 - Few-shot fact generation + few-shot ethical classification (few-fp + few-cls): `cot`
 
-### Install required pacakages:
-```
-pip install -r requirements.txt
-```
 
 An experiment can be ran with
 ```
@@ -49,7 +50,7 @@ optional arguments:
                         Name tag for the experiment log file.
   -v, --verbose
 ```
-Example: python general_check.py -t sbic -m cot -s 0 -n 0
+Example: python general_check.py -t hsd -m cot -s 0 -n 0
 
 
 ## Citation
